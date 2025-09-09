@@ -8,7 +8,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=44beb488-3916-4da6-912c-5ebcf50644c5
+      - OPENAI_API_KEY=
       - OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
       - DEFAULT_MODEL=doubao-seed-1-6-flash-250828
       - MEMORY_MODE_ENABLED=true
