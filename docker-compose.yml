@@ -8,15 +8,16 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=
-      - OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/v3
-      - DEFAULT_MODEL=doubao-seed-1-6-flash-250828
+      - OPENAI_API_KEY=sk-e9cf68e1a66b4846ba1111523ef294a5
+      - OPENAI_BASE_URL=https://api.deepseek.com/v1
+      - DEFAULT_MODEL=deepseek-chat
       - MEMORY_MODE_ENABLED=true
+      - EMBEDDING_API_KEY=sk-mdrdlcaynuvvddqqwatoidvwlemcrebqbjbnsfoaatvwwwfl
     volumes:
       - ./static:/app/static
     depends_on:
       - qdrant
-      - ollama
+
     networks:
       - memory-net
     restart: unless-stopped
@@ -46,30 +47,8 @@ services:
       retries: 3
 
   # Ollama服务
-  ollama:
-    image: docker.1ms.run/ollama/ollama:latest
-    container_name: memory-chat-ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-      - ./ollama-init.sh:/ollama-init.sh
-    networks:
-      - memory-net
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 8G  # 为Ollama分配足够的内存
-          cpus: '4'  # 限制CPU使用
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s  # Ollama需要更长时间启动
-    # 启动时预加载必需的模型
-    command: ["/bin/sh", "-c", "/ollama-init.sh && ollama serve"]
+
+
 
 networks:
   memory-net:
